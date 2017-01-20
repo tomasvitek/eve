@@ -2,6 +2,11 @@
 
 <h1 n:block=title>{$title}</h1>
 
+{if count($events) == 0}
+	<p>No events were found!</p>
+	<hr class="divider">
+{/if}
+
 {foreach $events as $event}
 <table id="event-{$event->id}">
 	<tr>
@@ -35,7 +40,19 @@
 </table>
 <pre>{$event->abstract}</pre>
 
-{sep}<hr class="divider">{/sep}
+<hr class="divider">
 
 {/foreach}
 
+{ifCurrent Events:}
+	<p>You can also view <a n:href="Events:past">past events</a>.</p>
+{/ifCurrent}
+
+{ifCurrent Events:past}
+	<p>You can also view <a n:href="Events:">upcoming events</a>.</p>
+{/ifCurrent}
+
+{if $user->loggedIn}
+	<hr class="divider">
+	<p><a n:href="Events:add">Create a new event</a></p>
+{/if}

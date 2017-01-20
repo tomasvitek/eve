@@ -2,6 +2,10 @@
  * Custom styles for eve app
  */
 
+.content h1 {
+	margin-bottom: 30px;
+}
+
 hr.divider {
 	margin-top: 30px;
 }
@@ -14,11 +18,11 @@ hr.divider {
 /* flash messages */
 
 div.flash {
-  color: black;
-  background: #FFFFDD;
-  border: 1px solid #FFD700;
-  padding: 1em;
-  margin: 1em 0;
+	color: black;
+	background: #FFFFDD;
+	border: 1px solid #FFD700;
+	padding: 1em;
+	margin: 1em 0;
 }
 
 /* forms */
