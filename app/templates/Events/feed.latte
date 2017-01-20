@@ -1,0 +1,21 @@
+{contentType application/xml}
+<?xml version='1.0' encoding='utf-8' ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Upcoming events | {ifset subtitle}{include subtitle|striptags}{/ifset}</title>
+		<link>{$baseUrl}</link>
+		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
+		<pubDate>{time()|date:r}</pubDate>				
+	</channel>
+	{foreach $events as $event}
+	<item>
+		<title>{$event->topic} by {$event->speaker}{if $event->institution} ($event->institution){/if}</title>
+		<link>{$baseUrl}{link Events:}#event-{$event->id}</link>
+		<guid>{$baseUrl}{link Events:}#event-{$event->id}</guid>
+		<pubDate>{$event->timestart|date:r}</pubDate>
+		<description xml:space="preserve"><![CDATA[
+			{$event->abstract}
+		]]></description>
+	</item>
+	{/foreach}
+</rss>

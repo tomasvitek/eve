@@ -1,0 +1,12 @@
+{block content}
+
+<h1 n:block="title">Delete Event</h1>
+
+{if $event}
+	<p>Are you sure that you want to delete ‘{$event->topic}’ by ‘{$event->speaker}’?</p>
+	
+	{control deleteForm}
+
+{else}
+	<p>Cannot find event.</p>
+{/if}

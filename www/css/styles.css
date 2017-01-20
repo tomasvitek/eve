@@ -1,0 +1,69 @@
+/**
+ * Custom styles for eve app
+ */
+
+hr.divider {
+	margin-top: 30px;
+}
+
+.glyphicon {
+	width: 20px;
+	height: 20px;
+}
+
+/* flash messages */
+
+div.flash {
+  color: black;
+  background: #FFFFDD;
+  border: 1px solid #FFD700;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+/* forms */
+
+form input.default {
+	font-weight: bold;
+	font-size: 105%;
+}
+
+form table {
+	width: 80%;
+	margin: 30px auto;
+}
+
+form table th,
+form table td {
+	border-bottom: 0;
+}
+
+form table th {
+	width: 30%;
+}
+
+input.text, 
+input.datetime-local, 
+input[type="url"],
+textarea {
+	width: 100%;
+}
+
+textarea {
+	border: 1px solid lightgray;
+	height: 80px;
+}
+
+label.required:after {
+	content: " *";
+	color: red;
+}
+
+
+/* login form */
+
+#frm-signInForm {
+	border: 1px solid lightgray;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}

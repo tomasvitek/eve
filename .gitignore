@@ -1,0 +1,9 @@
+.env
+tmp/log/*
+tmp/sesions/*
+tmp/cache/*
+vendor/*
+!.gitignore
+!.htaccess
+!web.config
+app/config/config.local.neon
