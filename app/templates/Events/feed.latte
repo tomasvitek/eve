@@ -5,11 +5,11 @@
 		<title>Upcoming events | {ifset subtitle}{include subtitle|striptags}{/ifset}</title>
 		<link>{$baseUrl}</link>
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
-		<pubDate>{time()|date:r}</pubDate>				
+		<pubDate>{time()|date:r}</pubDate>
 	</channel>
 	{foreach $events as $event}
 	<item>
-		<title>{$event->topic} by {$event->speaker}{if $event->institution} ($event->institution){/if}</title>
+		<title>{$event->topic} by {$event->speaker}{if $event->institution} ({$event->institution}){/if}</title>
 		<link>{$baseUrl}{link Events:}#event-{$event->id}</link>
 		<guid>{$baseUrl}{link Events:}#event-{$event->id}</guid>
 		<pubDate>{$event->timestart|date:r}</pubDate>
