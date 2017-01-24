@@ -12,7 +12,7 @@ Lastly, `eve` provides an URL to **count number of interested attendees**.
 
 ## Screenshot
 
-![](docs/screenshot.jpg)
+![](docs/screenshot.png)
 
 ## Installing
 
