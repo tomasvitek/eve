@@ -4,10 +4,15 @@ Do you organise regular seminars and need a simple way to advertise
 upcoming seminars and their speakers?
 
 `eve` provides an easy way to manage and render lists of both
-upcoming and past events. `eve` also generates a RSS feed of
-all upcoming events and provides a URL to count number of interested attendees.
+upcoming and past events. `eve` also generates an **iCal feed** of
+all upcoming events to enable attendees to subscribe to your events.
+Lastly, `eve` provides an URL to **count number of interested attendees**.
 
 `eve` uses [Nette](http://nette.org/) framework and is written in PHP.
+
+## Screenshot
+
+![](docs/screenshot.jpg)
 
 ## Installing
 
@@ -27,7 +32,7 @@ management tool (such as [DB Browser for SQLite](http://sqlitebrowser.org/)).
 When changing or creating a new password, you can enter it directly into
 the database in plaintext, it will be hashed first time the user logs in.
 
-## Interested number of attendees
+## Interested attendees
 
 Sometimes, it is useful to find out how many attendees is interested in
 attending the seminar, so that you can arrange a proper room or catering.
@@ -39,9 +44,9 @@ each event will then shows the total number of interested attendees.
 
 ## Requirements
 
-- PHP >= 5.3 with SQLite support
-- Apache with mod_rewrite support
+- **PHP** >= 5.3 with `SQLite` support
+- **Apache** with `mod_rewrite` support
 
 ## License
 
-MIT
+MIT © [Tomas Vitek](https://tomasvitek.com)
