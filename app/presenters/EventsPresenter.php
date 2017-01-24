@@ -13,8 +13,7 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 	/** @var Model\EventsRepository */
 	private $events;
 
-
-	protected function checkIfLoggedIn() 
+	protected function checkIfLoggedIn()
 	{
 		if (!$this->getUser()->isLoggedIn()) {
 			if ($this->getUser()->getLogoutReason() === Nette\Security\IUserStorage::INACTIVITY) {
@@ -40,9 +39,37 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 
 	/********************* view feed *********************/
 
-	public function renderFeed()
+	public function renderICal()
 	{
-		$this->template->events = $this->events->findUpcoming();
+    $this->absoluteUrls = TRUE;
+
+    $calendar = new \Eluceo\iCal\Component\Calendar($this->link('Events:'));
+    $calendar->setName("Events calendar");
+    //$calendar->setDescription("Calendar description");
+
+    foreach ($this->events->findUpcoming() as $event) {
+      if ($event->timestart) {
+        $e = new \Eluceo\iCal\Component\Event();
+        $summary = '"' . $event->topic . '" by ' .$event->speaker;
+        if ($event->institution) {
+          $summary .= ' (' . $event->institution . ')';
+        }
+        $e->setSummary($summary);
+        $e->setUrl($this->link('Events:') . '#event-' . $event->id);
+        if ($event->location) {
+          $e->setLocation($event->location);
+        }
+        $e->setDescription($event->abstract);
+        $e->setDtStart(new \DateTime($event->timestart));
+        $e->setDtEnd(new \DateTime($event->timeend));
+        $calendar->addComponent($e);
+      }
+    }
+
+    header('Content-type: text/calendar; charset=utf-8');
+    header('Content-Disposition: attachment; filename=events.ics');
+    $response = new \Nette\Application\Responses\TextResponse($calendar->render());
+    $this->sendResponse($response);
 	}
 
 
@@ -59,9 +86,9 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 
 	public function renderAttend($id)
 	{
-		$this->events->addAttending($id);
+		$this->events->addAttending(base64_decode($id));
 		$this->flashMessage('Thanks for your RSVP!');
-		$this->redirect('default');		
+		$this->redirect('default');
 	}
 
 
@@ -69,9 +96,9 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 
 	public function actionAdd()
 	{
-		$this->checkIfLoggedIn();	
+		$this->checkIfLoggedIn();
 
-		$this['albumForm']['save']->caption = 'Add';
+		$this['eventForm']['save']->caption = 'Add';
 	}
 
 
@@ -96,7 +123,7 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 
 	public function renderDelete($id = 0)
 	{
-		$this->checkIfLoggedIn();	
+		$this->checkIfLoggedIn();
 
 		$this->template->event = $this->events->findById($id);
 		if (!$this->template->event) {
@@ -134,7 +161,7 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 
 		$form->addDateTimePicker('timeend', 'End:');
 
-		$form->addSubmit('send', 'Save');
+		$form->addSubmit('save', 'Save');
 
 		$form->onSuccess[] = [$this, 'eventFormSucceeded'];
 		return $form;

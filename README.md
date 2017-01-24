@@ -1,21 +1,46 @@
-# eve: a simple event manager
+# eve: simple event manager
 
-`eve` provides an easy way to manage and render lists of both 
-upcoming and past events.  It uses [Nette](http://nette.org/) framework and is written in PHP.
+Do you organise regular seminars and need a simple way to advertise
+upcoming seminars and their speakers?
+
+`eve` provides an easy way to manage and render lists of both
+upcoming and past events. `eve` also generates a RSS feed of
+all upcoming events and provides a URL to count number of interested attendees.
+
+`eve` uses [Nette](http://nette.org/) framework and is written in PHP.
 
 ## Installing
 
  - Run `composer update`
  - Make directories `tmp/cache` and `tmp/log` writable
  - Point your webserver to `www` directory
- - Open in your browser 
+ - Open in your browser
  - Go to `http://your-website.com/admin` to open administration
- - Dfault login is `demo` and password `xxx`
+ - Default login is `demo` and password `demo`
+
+## Creating a new admin user
+
+You can remove the default user and / or create a new admin user directly in
+SQLite database located in `app/model/events.db3` using you favourite SQLite
+management tool (such as [DB Browser for SQLite](http://sqlitebrowser.org/)).
+
+When changing or creating a new password, you can enter it directly into
+the database in plaintext, it will be hashed first time the user logs in.
+
+## Interested number of attendees
+
+Sometimes, it is useful to find out how many attendees is interested in
+attending the seminar, so that you can arrange a proper room or catering.
+
+If you login to `eve` administration, each event will list a unique `URL for RSVP`.
+You can copy this URL into emails or forum posts and ask everybody interested in
+attending to click it, their interest will be recorded. If you log in,
+each event will then shows the total number of interested attendees.
 
 ## Requirements
 
 - PHP >= 5.3 with SQLite support
-- Nette Framework = 2.3
+- Apache with mod_rewrite support
 
 ## License
 

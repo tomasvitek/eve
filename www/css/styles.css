@@ -7,12 +7,18 @@
 }
 
 hr.divider {
-	margin-top: 30px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
-.glyphicon {
-	width: 20px;
-	height: 20px;
+.event {
+  padding-left: 20px;
+  margin-bottom: 10px;
+  border-left: 1px solid #eeeeee;
+}
+
+.event p {
+  padding-left: 10px;
 }
 
 /* flash messages */
@@ -33,7 +39,7 @@ form input.default {
 }
 
 form table {
-	width: 80%;
+	width: 100%;
 	margin: 30px auto;
 }
 
@@ -43,11 +49,11 @@ form table td {
 }
 
 form table th {
-	width: 30%;
+	width: 25%;
 }
 
-input.text, 
-input.datetime-local, 
+input.text,
+input.datetime-local,
 input[type="url"],
 textarea {
 	width: 100%;
@@ -55,7 +61,7 @@ textarea {
 
 textarea {
 	border: 1px solid lightgray;
-	height: 80px;
+	height: 150px;
 }
 
 label.required:after {
@@ -70,4 +76,12 @@ label.required:after {
 	border: 1px solid lightgray;
 	padding-top: 20px;
 	padding-bottom: 20px;
+}
+
+#frm-signInForm table th {
+	width: 30%;
+}
+
+#frm-signInForm table {
+	width: 80%;
 }

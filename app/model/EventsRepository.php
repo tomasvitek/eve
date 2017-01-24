@@ -42,16 +42,16 @@ class EventsRepository
 
 
 	/** @return Nette\Database\Table\ActiveRow */
-	public function findUpcoming() 
+	public function findUpcoming()
 	{
-		return $this->findAll()->where("timeend > ?", time())->order('timestart DESC');
+		return $this->findAll()->where("timeend > ?", time())->order('timestart');
 	}
 
-	
+
 	/** @return Nette\Database\Table\ActiveRow */
-	public function findPast() 
+	public function findPast()
 	{
-		return $this->findAll()->where("timeend < ?", time())->order('timestart');
+		return $this->findAll()->where("timeend < ?", time())->order('timestart DESC');
 	}
 
 

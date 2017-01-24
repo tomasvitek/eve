@@ -8,51 +8,60 @@
 {/if}
 
 {foreach $events as $event}
-<table id="event-{$event->id}">
-	<tr>
-		<th>Speaker</th>
-		<td>{if $event->website}<a href="{$event->website}">{$event->speaker}</a>{else}{$event->speaker}{/if}{if $event->institution} ({$event->institution}){/if}</td>
-	</tr>
-	<tr>
-		<th>Topic</th>
-		<td>{$event->topic}</td>
-	</tr>
-	<tr>
-		<th>Date, Time</th>
-		<td>{$event->timestart|date:'%d.%m.%Y'}, {$event->timestart|date:'%H:%M'} - {$event->timeend|date:'%H:%M'}</td>
-	</tr>
-	<tr>
-		<th>Location</th>
-		<td>{$event->location}</td>
-	</tr>
-	<tr n:if="$user->loggedIn">
-		<th>Admin</th>
-		<td><a n:href="Events:edit $event->id">edit</a> &mdash; <a n:href="Events:delete $event->id">delete</a></td>
-	</tr>
-	<tr n:if="$user->loggedIn">
-		<th>RSVPs</th>
-		<td>{$event->attending}</td>
-	</tr>
-	<tr n:if="$user->loggedIn">
-		<th>URL for RSVP</th>
-		<td><code>{$baseUrl}{link Events:attend $event->id}</code></td>
-	</tr>
-</table>
-<pre>{$event->abstract}</pre>
+<div class="event">
+  <table id="event-{$event->id}">
+  	<tr>
+  		<th>Speaker</th>
+  		<td>{if $event->website}<a href="{$event->website}">{$event->speaker}</a>{else}{$event->speaker}{/if}{if $event->institution} ({$event->institution}){/if}</td>
+  	</tr>
+  	<tr>
+  		<th>Topic</th>
+  		<td>{$event->topic}</td>
+  	</tr>
+    {if $event->timestart}
+    	<tr>
+    		<th>Date, Time</th>
+    		<td>{$event->timestart|date:'%d.%m.%Y'}, {$event->timestart|date:'%H:%M'} - {$event->timeend|date:'%H:%M'}</td>
+    	</tr>
+    {/if}
+    {if $event->location}
+    	<tr>
+    		<th>Location</th>
+    		<td>{$event->location}</td>
+    	</tr>
+    {/if}
+  	<tr n:if="$user->loggedIn">
+  		<th>RSVPs</th>
+  		<td>{$event->attending}</td>
+  	</tr>
+  	<tr n:if="$user->loggedIn">
+  		<th>URL for RSVP</th>
+      {var $encodedId = base64_encode($event->id . '')}
+  		<td><code>{$baseUrl}{link Events:attend $encodedId}</code></td>
+  	</tr>
+    <tr n:if="$user->loggedIn">
+  		<th>Admin</th>
+  		<td><a n:href="Events:edit $event->id">edit</a> &mdash; <a n:href="Events:delete $event->id">delete</a></td>
+  	</tr>
+  </table>
+
+  <p>{nl2br($event->abstract)|noescape}</p>
+
+</div>
 
 <hr class="divider">
 
 {/foreach}
 
 {ifCurrent Events:}
-	<p>You can also view <a n:href="Events:past">past events</a>.</p>
+	<p>You can also view <a n:href="Events:past">past events <span class="glyphicon glyphicon-circle-arrow-down"></span></a>.</p>
 {/ifCurrent}
 
 {ifCurrent Events:past}
-	<p>You can also view <a n:href="Events:">upcoming events</a>.</p>
+	<p>You can also view <a n:href="Events:">upcoming events <span class="glyphicon glyphicon-circle-arrow-up"></span></a>.</p>
 {/ifCurrent}
 
 {if $user->loggedIn}
 	<hr class="divider">
-	<p><a n:href="Events:add">Create a new event</a></p>
+	<p><a n:href="Events:add"><span class="glyphicon glyphicon-plus-sign"></span> Create a new event</a></p>
 {/if}

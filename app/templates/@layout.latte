@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width">
-    
+
     <title>{ifset title}{include title|striptags}{/ifset}{ifset subtitle} | {include subtitle|striptags}{/ifset}</title>
 
     <link rel="stylesheet" href="{$baseUrl}/css/minimal.css">
@@ -21,7 +21,7 @@
 <body>
   <div class="wrapper">
     {include @header.latte}
-    
+
     <section>
   		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
@@ -38,10 +38,13 @@
         <small id="logged-in" n:if="$user->loggedIn">
           <br>Signed in as {$user->identity->realname} &mdash;  <a n:href="Sign:out">Sign out</a>
         </small>
+        <small id="logged-out" n:if="!$user->loggedIn">
+          <br><a n:href="Sign:in">Sign in</a>
+        </small>
       </p>
     </footer>
   </div>
-    
+
   {block scripts}
   	<script src="{$baseUrl}/js/scale.fix.js"></script>
     <script src="{$baseUrl}/js/jquery.custom.js"></script>

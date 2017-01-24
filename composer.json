@@ -20,6 +20,7 @@
 		"nette/utils": "^2.3",
 		"latte/latte": "^2.3",
 		"tracy/tracy": "^2.3",
-		"nextras/forms": "^2.0"
+		"nextras/forms": "^2.0",
+		"eluceo/ical": "^0.11.0"
 	}
 }
