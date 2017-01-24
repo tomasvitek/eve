@@ -1,5 +1,11 @@
 # eve: simple event manager
 
+`Note:` This is a custom version of `eve` for AIS research group at
+King's College London running at [http://nms.kcl.ac.uk/ais/eve/www/](http://nms.kcl.ac.uk/ais/eve/www/).
+If you'd like to use `eve`, please check `master` branch.
+
+______
+
 Do you organise regular seminars and need a simple way to advertise
 upcoming seminars and their speakers?
 
