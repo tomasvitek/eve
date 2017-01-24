@@ -53,14 +53,14 @@
 {/foreach}
 
 {ifCurrent Events:}
-	<p>You can also view <a n:href="Events:past">past events <span class="glyphicon glyphicon-circle-arrow-down"></span></a>.</p>
+	<p>You can also view <a n:href="Events:past">past seminars <span class="glyphicon glyphicon-circle-arrow-down"></span></a>.</p>
 {/ifCurrent}
 
 {ifCurrent Events:past}
-	<p>You can also view <a n:href="Events:">upcoming events <span class="glyphicon glyphicon-circle-arrow-up"></span></a>.</p>
+	<p>You can also view <a n:href="Events:">upcoming seminars <span class="glyphicon glyphicon-circle-arrow-up"></span></a>.</p>
 {/ifCurrent}
 
 {if $user->loggedIn}
 	<hr class="divider">
-	<p><a n:href="Events:add"><span class="glyphicon glyphicon-plus-sign"></span> Create a new event</a></p>
+	<p><a n:href="Events:add"><span class="glyphicon glyphicon-plus-sign"></span> Create a new seminar</a></p>
 {/if}
