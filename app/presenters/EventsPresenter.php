@@ -19,7 +19,7 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 			if ($this->getUser()->getLogoutReason() === Nette\Security\IUserStorage::INACTIVITY) {
 				$this->flashMessage('You have been signed out due to inactivity. Please sign in again.');
 			}
-			$this->redirect('Sign:in', ['backlink' => $this->storeRequest()]);
+			$this->redirect('Sign:in', array('backlink' => $this->storeRequest()));
 		}
 	}
 
@@ -163,7 +163,7 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 
 		$form->addSubmit('save', 'Save');
 
-		$form->onSuccess[] = [$this, 'eventFormSucceeded'];
+		$form->onSuccess[] = array($this, 'eventFormSucceeded');
 		return $form;
 	}
 
@@ -191,11 +191,11 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 	{
 		$form = new Form;
 		$form->addSubmit('cancel', 'Cancel')
-			->onClick[] = [$this, 'formCancelled'];
+			->onClick[] = array($this, 'formCancelled');
 
 		$form->addSubmit('delete', 'Delete')
 			->setHtmlAttribute('class', 'default')
-			->onClick[] = [$this, 'deleteFormSucceeded'];
+			->onClick[] = array($this, 'deleteFormSucceeded');
 
 		$form->addProtection();
 		return $form;

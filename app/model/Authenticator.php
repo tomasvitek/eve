@@ -9,10 +9,8 @@ use Nette\Security;
 /**
  * Users authenticator.
  */
-class Authenticator implements Security\IAuthenticator
+class Authenticator extends Nette\Object implements Security\IAuthenticator
 {
-	use Nette\SmartObject;
-
 	/** @var Nette\Database\Context */
 	private $database;
 
@@ -36,7 +34,7 @@ class Authenticator implements Security\IAuthenticator
 		if (!$row) {
 			throw new Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
 
-		} elseif (!Security\Passwords::verify($password, $row->password) && $password !== $row->password) {
+		} elseif (!Security\Passwords::verify($password, $row->password)) {
 			throw new Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
 		}
 

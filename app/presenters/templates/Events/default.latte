@@ -2,7 +2,7 @@
 
 <h1 n:block=title>{$title}</h1>
 
-{if count($events) == 0}
+{if $events->count() == 0}
 	<p>No events were found!</p>
 	<hr class="divider">
 {/if}

@@ -21,5 +21,7 @@ services:
 	router: App\RouterFactory::createRouter
 
 extensions:
-    nextras.form: Nextras\Forms\Bridges\NetteDI\FormsExtension
-    
+    tbDatePicker: RadekDostal\NetteComponents\DateTimePicker\TbDatePicker\DI\TbDatePickerExtension
+
+tbDatePicker:
+    format: j. n. Y H:i

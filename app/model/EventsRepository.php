@@ -5,9 +5,8 @@ namespace App\Model;
 use Nette;
 
 
-class EventsRepository
+class EventsRepository extends Nette\Object
 {
-	use Nette\SmartObject;
 
 	/** @var Nette\Database\Context */
 	private $database;
