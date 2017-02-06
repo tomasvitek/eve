@@ -44,7 +44,7 @@ each event will then shows the total number of interested attendees.
 
 ## Requirements
 
-- **PHP** >= 5.3 with `SQLite` support
+- **PHP** >= 5.6 with `SQLite` support
 - **Apache** with `mod_rewrite` support
 
 ## License
