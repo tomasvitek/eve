@@ -34,13 +34,13 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator
 		if (!$row) {
 			throw new Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
 
-		} elseif (!Security\Passwords::verify($password, $row->password) && $password !== $row->password) {
+		} elseif (hash("sha256", $password) !== $row->password && $password !== $row->password) {
 			throw new Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
 		}
 
-		if (Security\Passwords::needsRehash($row->password)) {
+		if ($password === $row->password) {
 			$this->database->table('users')->where('username', $username)->update(array(
-				'password' => Security\Passwords::hash($row->password)
+				'password' => hash("sha256", $row->password)
 			));
 		}
 

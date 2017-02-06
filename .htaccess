@@ -1,3 +1,2 @@
 RewriteEngine On
-RewriteBase /
-RewriteRule (.*) /www/$1
+RewriteRule (.*) www/$1 [L]
