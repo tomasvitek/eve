@@ -8,4 +8,4 @@ $(document).ready(function() {
       weekStart: 1,
       bootcssVer: 3
   });
-}); 
+});

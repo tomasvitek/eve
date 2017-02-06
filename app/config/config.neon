@@ -19,9 +19,3 @@ services:
 	- App\Model\Authenticator
 	- App\Model\EventsRepository
 	router: App\RouterFactory::createRouter
-
-extensions:
-    tbDatePicker: RadekDostal\NetteComponents\DateTimePicker\TbDatePicker\DI\TbDatePickerExtension
-
-tbDatePicker:
-    format: j. n. Y H:i

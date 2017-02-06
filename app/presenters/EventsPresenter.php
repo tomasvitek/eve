@@ -44,24 +44,36 @@ class EventsPresenter extends Nette\Application\UI\Presenter
     $this->absoluteUrls = TRUE;
 
     $calendar = new \Eluceo\iCal\Component\Calendar($this->link('Events:'));
-    $calendar->setName("Events calendar");
+    $calendar->setName("AIS Seminars");
     //$calendar->setDescription("Calendar description");
 
     foreach ($this->events->findUpcoming() as $event) {
       if ($event->timestart) {
         $e = new \Eluceo\iCal\Component\Event();
-        $summary = '"' . $event->topic . '" by ' .$event->speaker;
-        if ($event->institution) {
-          $summary .= ' (' . $event->institution . ')';
-        }
+        $summary = '[AIS Seminar] ' . $event->topic;
         $e->setSummary($summary);
         $e->setUrl($this->link('Events:') . '#event-' . $event->id);
         if ($event->location) {
           $e->setLocation($event->location);
         }
-        $e->setDescription($event->abstract);
-        $e->setDtStart(new \DateTime($event->timestart));
-        $e->setDtEnd(new \DateTime($event->timeend));
+
+        $description = "Topic: " . $event->topic . "\n";
+        $description .= "Speaker: " . $event->speaker;
+        if ($event->institution) {
+          $description .= " (" . $event->institution . ")";
+        }
+
+        if ($event->timestart) {
+          $description .= "\nDate: " . date("d.m.Y", $event->timestart) . ", " . date("H:i", $event->timestart) . " - " . date("H:i", $event->timeend);
+        }
+        if ($event->location) {
+          $description .= "\nLocation: " . $event->location;
+        }
+        $description .= "\n\nAbstract:\n" . $event->abstract;
+
+        $e->setDescription($description);
+        $e->setDtStart(new \DateTime("@".$event->timestart));
+        $e->setDtEnd(new \DateTime("@".$event->timeend));
         $calendar->addComponent($e);
       }
     }
@@ -114,7 +126,15 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 			if (!$event) {
 				$this->error('Event not found');
 			}
-			$form->setDefaults($event);
+      $data = $event->toArray();
+
+      // Required to make this work on PHP5.3
+      $timestart = new \DateTime("@".$data['timestart']);
+      $timeend = new \DateTime("@".$data['timeend']);
+			$data['timestart'] = $timestart->format('Y-m-d H:i');
+			$data['timeend'] = $timeend->format('Y-m-d H:i');
+
+			$form->setDefaults($data);
 		}
 	}
 
@@ -144,8 +164,8 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 			->setRequired('Please enter the speaker\'s name.');
 
 		$form->addText('website', 'Website:')
-			->setRequired(FALSE)
-			->addRule(Form::URL, 'Please enter a valid URL.');
+      ->addCondition($form::FILLED)
+        ->addRule(Form::URL, 'Please enter a valid URL.');
 
 		$form->addText('institution', 'Institution:');
 
@@ -157,9 +177,11 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 
 		$form->addText('location', 'Location:');
 
-		$form->addDateTimePicker('timestart', 'Start:');
+		$form->addText('timestart', 'Start:')
+			->setHtmlAttribute('class', 'datetime-local');
 
-		$form->addDateTimePicker('timeend', 'End:');
+		$form->addText('timeend', 'End:')
+			->setHtmlAttribute('class', 'datetime-local');
 
 		$form->addSubmit('save', 'Save');
 
@@ -170,7 +192,14 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 	public function eventFormSucceeded($form, $values)
 	{
 		$values = $form->getValues();
-		$id = (int) $this->getParameter('id');
+
+    // Required to make this work on PHP5.3
+    $timestart = new \DateTime($values['timestart']);
+    $timeend = new \DateTime($values['timeend']);
+    $values['timestart'] = $timestart->format('U');
+    $values['timeend'] = $timeend->format('U');
+
+    $id = (int) $this->getParameter('id');
 		if ($id) {
 			$this->events->findById($id)->update($values);
 			$this->flashMessage('The event has been updated.');

@@ -20,7 +20,6 @@
 		"nette/utils": "~2.3",
 		"latte/latte": "~2.3",
 		"tracy/tracy": "~2.3",
-		"radekdostal/Nette-DateTimePicker": "^2.5",
 		"eluceo/ical": "^0.11.0"
 	}
 }
