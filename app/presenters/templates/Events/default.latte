@@ -37,7 +37,7 @@
   	<tr n:if="$user->loggedIn">
   		<th>URL for RSVP</th>
       {var $encodedId = base64_encode($event->id . '')}
-  		<td><code>{$baseUrl}{link Events:attend $encodedId}</code></td>
+  		<td><code>{link //attend $encodedId}</code></td>
   	</tr>
     <tr n:if="$user->loggedIn">
   		<th>Admin</th>
