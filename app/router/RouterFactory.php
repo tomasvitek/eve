@@ -17,6 +17,7 @@ class RouterFactory
 	{
 		$router = new RouteList;
 		$router[] = new Route('admin', 'Sign:in');
+		$router[] = new Route('ais/seminars/events/attend/<id>', 'Events:attend', Route::ONE_WAY);
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Events:default');
 		return $router;
 	}
