@@ -49,17 +49,32 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 
     foreach ($this->events->findUpcoming() as $event) {
       if ($event->timestart) {
-        $e = new \Eluceo\iCal\Component\Event();
-        $summary = '"' . $event->topic . '" by ' .$event->speaker;
-        if ($event->institution) {
+				$e = new \Eluceo\iCal\Component\Event();
+				$summary = '"' . $event->topic . '" by ' .$event->speaker;
+				if ($event->institution) {
           $summary .= ' (' . $event->institution . ')';
         }
-        $e->setSummary($summary);
-        $e->setUrl($this->link('Events:') . '#event-' . $event->id);
-        if ($event->location) {
-          $e->setLocation($event->location);
-        }
-        $e->setDescription(strip_tags($event->abstract));
+				$e->setSummary($summary);
+				$e->setUrl($this->link('Events:') . '#event-' . $event->id);
+				if ($event->location) {
+					$e->setLocation($event->location);
+				}
+
+				$description = "Topic: " . $event->topic . "\n";
+				$description .= "Speaker: " . $event->speaker;
+				if ($event->institution) {
+					$description .= " (" . $event->institution . ")";
+				}
+
+				if ($event->timestart) {
+					$description .= "\nDate: " . date("d.m.Y", $event->timestart) . ", " . date("H:i", $event->timestart) . " - " . date("H:i", $event->timeend);
+				}
+				if ($event->location) {
+					$description .= "\nLocation: " . $event->location;
+				}
+				$description .= "\n\nAbstract:\n" . $event->abstract;
+
+				$e->setDescription(strip_tags($description));
         $e->setDtStart(new \DateTime($event->timestart));
         $e->setDtEnd(new \DateTime($event->timeend));
 				$e->setUseUtc(false);
