@@ -66,8 +66,18 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 					$description .= " (" . $event->institution . ")";
 				}
 
+				$startdate = \DateTime::createFromFormat('U', $event->timestart);
+				$enddate = \DateTime::createFromFormat('U', $event->timeend);
+				if ($startdate == FALSE || $enddate == FALSE) {
+					$startdate = \DateTime::createFromFormat('Y-m-d H:i:s', $event->timestart);
+					$enddate = \DateTime::createFromFormat('Y-m-d H:i:s', $event->timeend);
+				}
+				if ($startdate == FALSE || $enddate == FALSE) {
+					continue;
+				}
+
 				if ($event->timestart) {
-					$description .= "\nDate: " . date("d.m.Y", $event->timestart) . ", " . date("H:i", $event->timestart) . " - " . date("H:i", $event->timeend);
+					$description .= "\nDate: " . $startdate->format("d.m.Y") . ", " . $startdate->format("H:i") . " - " . $enddate->format("H:i");
 				}
 				if ($event->location) {
 					$description .= "\nLocation: " . $event->location;
@@ -75,10 +85,11 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 				$description .= "\n\nAbstract:\n" . $event->abstract;
 
 				$e->setDescription(strip_tags($description));
-        $e->setDtStart(new \DateTime($event->timestart));
-        $e->setDtEnd(new \DateTime($event->timeend));
-				$e->setUseTimezone(true);
-        $calendar->addComponent($e);
+				$startdate->setTimezone(new \DateTimeZone('GMT'));
+				$enddate->setTimezone(new \DateTimeZone('GMT'));
+        $e->setDtStart($startdate);
+        $e->setDtEnd($enddate);
+				$calendar->addComponent($e);
       }
     }
 
