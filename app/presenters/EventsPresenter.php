@@ -59,9 +59,10 @@ class EventsPresenter extends Nette\Application\UI\Presenter
         if ($event->location) {
           $e->setLocation($event->location);
         }
-        $e->setDescription($event->abstract);
+        $e->setDescription(strip_tags($event->abstract));
         $e->setDtStart(new \DateTime($event->timestart));
         $e->setDtEnd(new \DateTime($event->timeend));
+				$e->setUseUtc(false);
         $calendar->addComponent($e);
       }
     }
