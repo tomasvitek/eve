@@ -72,8 +72,8 @@ class EventsPresenter extends Nette\Application\UI\Presenter
         $description .= "\n\nAbstract:\n" . $event->abstract;
 
         $e->setDescription($description);
-        $e->setDtStart(new \DateTime("@".$event->timestart));
-        $e->setDtEnd(new \DateTime("@".$event->timeend));
+        $e->setDtStart(new \DateTime($event->timestart));
+        $e->setDtEnd(new \DateTime($event->timeend));
 				$e->setUseUtc(false);
         $calendar->addComponent($e);
       }
@@ -130,8 +130,8 @@ class EventsPresenter extends Nette\Application\UI\Presenter
       $data = $event->toArray();
 
       // Required to make this work on PHP5.3
-      $timestart = new \DateTime("@".$data['timestart']);
-      $timeend = new \DateTime("@".$data['timeend']);
+      $timestart = new \DateTime($data['timestart']);
+      $timeend = new \DateTime($data['timeend']);
 			$data['timestart'] = $timestart->format('Y-m-d H:i');
 			$data['timeend'] = $timeend->format('Y-m-d H:i');
 
@@ -179,9 +179,11 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 		$form->addText('location', 'Location:');
 
 		$form->addText('timestart', 'Start:')
+    	->addRule(Form::PATTERN, 'Enter valid start date and time.', '[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}')
 			->setHtmlAttribute('class', 'datetime-local');
 
 		$form->addText('timeend', 'End:')
+    	->addRule(Form::PATTERN, 'Enter valid end date and time.', '[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}')
 			->setHtmlAttribute('class', 'datetime-local');
 
 		$form->addSubmit('save', 'Save');
@@ -197,8 +199,8 @@ class EventsPresenter extends Nette\Application\UI\Presenter
     // Required to make this work on PHP5.3
     $timestart = new \DateTime($values['timestart']);
     $timeend = new \DateTime($values['timeend']);
-    $values['timestart'] = $timestart->format('U');
-    $values['timeend'] = $timeend->format('U');
+    $values['timestart'] = $timestart->format('Y-m-d H:i:s');
+    $values['timeend'] = $timeend->format('Y-m-d H:i:s');
 
     $id = (int) $this->getParameter('id');
 		if ($id) {
