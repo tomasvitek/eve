@@ -74,6 +74,7 @@ class EventsPresenter extends Nette\Application\UI\Presenter
         $e->setDescription($description);
         $e->setDtStart(new \DateTime("@".$event->timestart));
         $e->setDtEnd(new \DateTime("@".$event->timeend));
+				$e->setUseUtc(false);
         $calendar->addComponent($e);
       }
     }
