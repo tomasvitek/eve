@@ -57,6 +57,13 @@ class EventsPresenter extends Nette\Application\UI\Presenter
           $e->setLocation($event->location);
         }
 
+		$startdate = \DateTime::createFromFormat('U', $event->timestart);
+		$enddate = \DateTime::createFromFormat('U', $event->timeend);
+		if ($startdate == FALSE || $enddate == FALSE) {
+			$startdate = \DateTime::createFromFormat('Y-m-d H:i:s', $event->timestart);
+			$enddate = \DateTime::createFromFormat('Y-m-d H:i:s', $event->timeend);
+		}
+
         $description = "Topic: " . $event->topic . "\n";
         $description .= "Speaker: " . $event->speaker;
         if ($event->institution) {
@@ -64,7 +71,7 @@ class EventsPresenter extends Nette\Application\UI\Presenter
         }
 
         if ($event->timestart) {
-          $description .= "\nDate: " . date("d.m.Y", $event->timestart) . ", " . date("H:i", $event->timestart) . " - " . date("H:i", $event->timeend);
+          $description .= "\nDate: " . $startdate->format("d.m.Y") . ", " . $startdate->format("H:i") . " - " . $enddate->format("H:i");
         }
         if ($event->location) {
           $description .= "\nLocation: " . $event->location;
@@ -72,10 +79,13 @@ class EventsPresenter extends Nette\Application\UI\Presenter
         $description .= "\n\nAbstract:\n" . $event->abstract;
 
         $e->setDescription(strip_tags($description));
-        $e->setDtStart(new \DateTime($event->timestart));
-        $e->setDtEnd(new \DateTime($event->timeend));
-				$e->setUseTimezone(true);
-        $calendar->addComponent($e);
+		$startdate->setTimezone(new \DateTimeZone('GMT'));
+		$enddate->setTimezone(new \DateTimeZone('GMT'));
+        $e->setDtStart($startdate);
+        $e->setDtEnd($enddate);
+		if ($startdate !== FALSE && $enddate !== FALSE) {
+			$calendar->addComponent($e);
+		}
       }
     }
 
@@ -127,13 +137,17 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 			if (!$event) {
 				$this->error('Event not found');
 			}
-      $data = $event->toArray();
+      		$data = $event->toArray();
 
-      // Required to make this work on PHP5.3
-      $timestart = new \DateTime($data['timestart']);
-      $timeend = new \DateTime($data['timeend']);
-			$data['timestart'] = $timestart->format('Y-m-d H:i');
-			$data['timeend'] = $timeend->format('Y-m-d H:i');
+      		// Required to make this work on PHP5.3
+			$startdate = \DateTime::createFromFormat('U', $event->timestart);
+			$enddate = \DateTime::createFromFormat('U', $event->timeend);
+			if ($startdate == FALSE || $enddate == FALSE) {
+				$startdate = \DateTime::createFromFormat('Y-m-d H:i:s', $event->timestart);
+				$enddate = \DateTime::createFromFormat('Y-m-d H:i:s', $event->timeend);
+			}
+      		$data['timestart'] = $startdate->format('Y-m-d H:i');
+			$data['timeend'] = $enddate->format('Y-m-d H:i');
 
 			$form->setDefaults($data);
 		}
@@ -196,13 +210,13 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 	{
 		$values = $form->getValues();
 
-    // Required to make this work on PHP5.3
-    $timestart = new \DateTime($values['timestart']);
-    $timeend = new \DateTime($values['timeend']);
-    $values['timestart'] = $timestart->format('Y-m-d H:i:s');
-    $values['timeend'] = $timeend->format('Y-m-d H:i:s');
+		// Required to make this work on PHP5.3
+		$timestart = \DateTime::createFromFormat('Y-m-d H:i', $values['timestart']);
+		$timeend = \DateTime::createFromFormat('Y-m-d H:i', $values['timeend']);
+	    $values['timestart'] = $timestart->format('U');
+	    $values['timeend'] = $timeend->format('U');
 
-    $id = (int) $this->getParameter('id');
+    	$id = (int) $this->getParameter('id');
 		if ($id) {
 			$this->events->findById($id)->update($values);
 			$this->flashMessage('The event has been updated.');
