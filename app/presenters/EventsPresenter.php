@@ -145,6 +145,8 @@ class EventsPresenter extends Nette\Application\UI\Presenter
                 $startdate = \DateTime::createFromFormat('Y-m-d H:i:s', $event->timestart);
                 $enddate = \DateTime::createFromFormat('Y-m-d H:i:s', $event->timeend);
             }
+            $startdate->setTimezone(new \DateTimeZone('Europe/London'));
+            $enddate->setTimezone(new \DateTimeZone('Europe/London'));
             $data['timestart'] = $startdate->format('Y-m-d H:i');
             $data['timeend'] = $enddate->format('Y-m-d H:i');
 
@@ -192,10 +194,12 @@ class EventsPresenter extends Nette\Application\UI\Presenter
         $form->addText('location', 'Location:');
 
         $form->addText('timestart', 'Start:')
+        ->setRequired('Please enter the abstract.')
         ->addRule(Form::PATTERN, 'Enter valid start date and time.', '[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}')
             ->setHtmlAttribute('class', 'datetime-local');
 
         $form->addText('timeend', 'End:')
+        ->setRequired('Please enter the abstract.')
         ->addRule(Form::PATTERN, 'Enter valid end date and time.', '[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}')
             ->setHtmlAttribute('class', 'datetime-local');
 
