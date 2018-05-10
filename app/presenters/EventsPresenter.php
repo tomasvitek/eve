@@ -43,13 +43,13 @@ class EventsPresenter extends Nette\Application\UI\Presenter
         $this->absoluteUrls = true;
 
         $calendar = new \Eluceo\iCal\Component\Calendar($this->link('Events:'));
-        $calendar->setName("AIS Seminars");
+        $calendar->setName("DAI Seminars");
     //$calendar->setDescription("Calendar description");
 
     foreach ($this->events->findUpcoming() as $event) {
         if ($event->timestart) {
             $e = new \Eluceo\iCal\Component\Event();
-            $summary = '[AIS Seminar] ' . $event->topic;
+            $summary = '[DAI Seminar] ' . $event->topic;
             $e->setSummary($summary);
             $e->setUrl($this->link('Events:') . '#event-' . $event->id);
             if ($event->location) {
