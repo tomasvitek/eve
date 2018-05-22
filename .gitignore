@@ -7,3 +7,4 @@ vendor/*
 !.htaccess
 !web.config
 app/config/config.local.neon
+app/model/events.db3
