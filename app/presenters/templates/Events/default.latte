@@ -3,7 +3,7 @@
 <h1 n:block=title>{$title}</h1>
 
 {if $events->count() == 0}
-	<p>No events were found!</p>
+	<p>{if $isUpcoming}No upcoming seminars are scheduled! Please contact <a href="https://kcl.tomasvitek.com">Tomas Vitek</a>, if you'd like to schedule one.{else}There have been no past seminars.{/if}</p>
 	<hr class="divider">
 {/if}
 

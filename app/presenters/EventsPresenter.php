@@ -32,6 +32,7 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 
     public function renderDefault()
     {
+        $this->template->isUpcoming = true;
         $this->template->title = 'Upcoming Seminars';
         $this->template->events = $this->events->findUpcoming();
     }
@@ -99,6 +100,7 @@ class EventsPresenter extends Nette\Application\UI\Presenter
 
     public function renderPast()
     {
+        $this->template->isUpcoming = false;
         $this->template->title = 'Past Seminars';
         $this->template->events = $this->events->findPast();
     }
