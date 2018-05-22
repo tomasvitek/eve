@@ -1,7 +1,7 @@
 # eve: simple event manager
 
 `Note:` This is a custom version of `eve` for DAI research group at
-King's College London running at [https://nms.kcl.ac.uk/ais/seminars/](https://nms.kcl.ac.uk/ais/seminars/).
+King's College London running at [https://nms.kcl.ac.uk/dai/seminars/](https://nms.kcl.ac.uk/dai/seminars/).
 If you'd like to use `eve`, please check `master` branch.
 
 ______
