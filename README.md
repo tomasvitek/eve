@@ -24,10 +24,11 @@ Lastly, `eve` provides an URL to **count number of interested attendees**.
 
  - Run `composer update`
  - Make directories `tmp/cache` and `tmp/log` writable
+ - `cp app/model/events.sample.db3 app/model/events.db3`
  - Point your webserver to `www` directory
  - Open in your browser
  - Go to `http://your-website.com/admin` to open administration
- - Default login is `demo` and password `demo`
+ - Default login is `admin` and password `test`
 
 ## Creating a new admin user
 
